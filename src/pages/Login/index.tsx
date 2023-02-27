@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput } from "@react-native-material/core";
-import auth from "../../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import app from "../../config/firebase";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import {
   Page,
   LoginButton,
@@ -17,15 +17,20 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [errorLogin, setErrorLogin] = useState(false);
 
+  const auth = getAuth(app);
+
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
+      .then((userCredential) => {
         setErrorLogin(false);
         const user = userCredential.user;
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Poligon" }],
-        });
+        navigation.reset(
+          {
+            index: 0,
+            routes: [{ name: "Poligon" }],
+          },
+          { idUser: user.id }
+        );
       })
       .catch(error => {
         setErrorLogin(true);
