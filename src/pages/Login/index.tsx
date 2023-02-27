@@ -9,7 +9,7 @@ import {
   AppNameView,
   AppName,
   TextError,
-    ErrorView,
+  ErrorView,
 } from "./styles";
 
 export default function Login({ navigation }) {
