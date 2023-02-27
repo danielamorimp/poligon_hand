@@ -6,19 +6,23 @@ import {
   FooteContainer,
   FooteButtonContainer,
   LoginButton,
-} from './styles';
+  Poligon,
+  PoligonView
+} from "./styles";
 import app from "../../config/firebase";
 import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 
-const Poligon: React.FC = () => {
+export default function Poligonn({ route }) {
   const [userId, setUserId] = useState([]);
+  const [color, setColor] = useState(false);
   const [cubeColor, setCubeColor] = useState('');
   const [coneColor, setConeColor] = useState('');
   const [dodecaedroColor, setDodecaedroColor] = useState('');
 
   const db = getFirestore(app);
 
-  const userCollectionRef = collection(db, "colors");
+  const userCollectionRef = collection(db, route.params.idUser);
+  const takeLastRegister = userId[userId.length - 1];
 
   const handleSaveColors = useCallback(async () => {
     await addDoc(userCollectionRef, {
@@ -26,44 +30,70 @@ const Poligon: React.FC = () => {
       coneColor,
       dodecaedroColor,
     });
-  }, [coneColor, cubeColor, dodecaedroColor, userCollectionRef]);
+  }, [userCollectionRef, cubeColor, coneColor, dodecaedroColor]);
 
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(userCollectionRef);
+      setUserId(data.docs.map(doc => ({...doc.data(), id: doc.id})));
     };
     getUsers();
-  }, [userCollectionRef]);
-
+  }, []);
+  
   return (
     <Page>
+      <PoligonView>
+        <Poligon
+          style={
+            takeLastRegister === undefined
+              ? {backgroundColor: cubeColor}
+              : {backgroundColor: takeLastRegister.cubeColor}
+          }
+        />
+        <Poligon
+          style={
+            takeLastRegister === undefined
+              ? {backgroundColor: coneColor}
+              : {backgroundColor: takeLastRegister.coneColor}
+          }
+        />
+        <Poligon
+          style={
+            takeLastRegister === undefined
+              ? {backgroundColor: dodecaedroColor}
+              : {backgroundColor: takeLastRegister.dodecaedroColor}
+          }
+        />
+      </PoligonView>
       <FooteContainer>
         <FooteButtonContainer>
           <TextInput
             placeholder="Cor do Cubo"
             style={{ backgroundColor: "white", width: "33%", height: 20 }}
             onChangeText={(text) => setCubeColor(text)}
-            value={cubeColor}
+            value={cubeColor.toLowerCase()}
           />
           <TextInput
             placeholder="Cor do Cone"
             style={{ backgroundColor: "white", width: "33%", height: 20 }}
             onChangeText={(text) => setConeColor(text)}
-            value={coneColor}
+            value={coneColor.toLowerCase()}
           />
           <TextInput
             placeholder="Cor do Dodecaedro"
             style={{ backgroundColor: "white", width: "33%", height: 20 }}
             onChangeText={(text) => setDodecaedroColor(text)}
-            value={dodecaedroColor}
+            value={dodecaedroColor.toLowerCase()}
           />
         </FooteButtonContainer>
-        <LoginButton onPress={handleSaveColors}>
+        <LoginButton
+          onPress={() => {
+            handleSaveColors();
+            setColor(true);
+          }}>
           <Text>Aplicar</Text>
         </LoginButton>
       </FooteContainer>
     </Page>
   );
 };
-
-export default Poligon;

@@ -24,20 +24,12 @@ export default function Login({ navigation }) {
       .then((userCredential) => {
         setErrorLogin(false);
         const user = userCredential.user;
-        navigation.reset(
-          {
-            index: 0,
-            routes: [{ name: "Poligon" }],
-          },
-          { idUser: user.id }
-        );
+        navigation.navigate("Poligon", { idUser: user.uid });
       })
       .catch(error => {
         setErrorLogin(true);
       });
   };
-
-  useEffect(() => {}, []);
 
   return (
     <Page>

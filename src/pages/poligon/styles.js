@@ -21,6 +21,21 @@ export const FooteContainer = styled.View`
   padding-bottom: 50px;
 `;
 
+export const Poligon = styled.View`
+  background-color: blue ;
+  height: 80px ;
+  width: 80px ;
+  justify-content:space-between ;
+  padding-top: 200 ;
+`;
+
+export const PoligonView = styled.View`
+  flex: 1;
+  align-items: center;
+  padding-bottom: 50px;
+  justify-content: center ;
+`;
+
 export const LoginButton = styled.TouchableOpacity`
   border-width: 1px;
   align-items: center;
