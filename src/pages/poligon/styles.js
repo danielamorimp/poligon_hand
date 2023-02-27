@@ -22,11 +22,11 @@ export const FooteContainer = styled.View`
 `;
 
 export const Poligon = styled.View`
-  background-color: blue ;
-  height: 80px ;
-  width: 80px ;
-  justify-content:space-between ;
-  padding-top: 200 ;
+  background-color: blue;
+  height: 80px;
+  width: 80px;
+  justify-content: space-between;
+  padding-top: 200px;
 `;
 
 export const PoligonView = styled.View`
