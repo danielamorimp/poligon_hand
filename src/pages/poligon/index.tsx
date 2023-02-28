@@ -45,7 +45,7 @@ export default function Poligonn({route}) {
       setUserId(data.docs.map(doc => ({...doc.data(), id: doc.id})));
     };
     getUsers();
-  }, [userCollectionRef]);
+  }, []);
 
   return (
     <Page>
@@ -55,7 +55,7 @@ export default function Poligonn({route}) {
             cubeColorScreen !== ''
               ? {backgroundColor: cubeColorScreen}
               : takeLastRegister
-              ? {backgroundColor: takeLastRegisterß.cubeColor} : null
+              ? {backgroundColor: takeLastRegister.cubeColor} : null
           }
         />
         <Poligon
