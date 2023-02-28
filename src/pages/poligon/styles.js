@@ -22,7 +22,7 @@ export const FooteContainer = styled.View`
 `;
 
 export const Poligon = styled.View`
-  background-color: blue;
+  background-color: white;
   height: 80px;
   width: 80px;
   justify-content: space-between;

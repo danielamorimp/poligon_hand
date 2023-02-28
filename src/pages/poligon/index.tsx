@@ -12,11 +12,14 @@ import {
 import app from '../../config/firebase';
 import {addDoc, collection, getDocs, getFirestore} from 'firebase/firestore';
 
-export default function Poligonn({ route }) {
+export default function Poligonn({route}) {
   const [userId, setUserId] = useState([]);
   const [cubeColor, setCubeColor] = useState('');
   const [coneColor, setConeColor] = useState('');
   const [dodecaedroColor, setDodecaedroColor] = useState('');
+  const [cubeColorScreen, setCubeColorScreen] = useState('');
+  const [coneColorScreen, setConeColorScreen] = useState('');
+  const [dodecaedroColorScreen, setDodecaedroColorScreen] = useState('');
 
   const db = getFirestore(app);
 
@@ -24,12 +27,17 @@ export default function Poligonn({ route }) {
   const takeLastRegister = userId[userId.length - 1];
 
   const handleSaveColors = useCallback(async () => {
-    await addDoc(userCollectionRef, {
-      cubeColor,
-      coneColor,
-      dodecaedroColor,
-    });
-  }, [userCollectionRef, cubeColor, coneColor, dodecaedroColor]);
+    cubeColor !== '' && coneColor !== '' && dodecaedroColor !== ''
+      ? (setCubeColorScreen(cubeColor),
+        setConeColorScreen(coneColor),
+        setDodecaedroColorScreen(dodecaedroColor),
+        await addDoc(userCollectionRef, {
+          cubeColor,
+          coneColor,
+          dodecaedroColor,
+        }))
+      : null;
+  }, [coneColor, cubeColor, dodecaedroColor, userCollectionRef]);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -37,30 +45,35 @@ export default function Poligonn({ route }) {
       setUserId(data.docs.map(doc => ({...doc.data(), id: doc.id})));
     };
     getUsers();
-  }, []);
+  }, [userCollectionRef]);
 
   return (
     <Page>
       <PoligonView>
         <Poligon
           style={
-            takeLastRegister !== undefined && cubeColor === ''
-              ? {backgroundColor: takeLastRegister.cubeColor}
-              : {backgroundColor: cubeColor}
+            cubeColorScreen !== ''
+              ? {backgroundColor: cubeColorScreen}
+              : takeLastRegister
+              ? {backgroundColor: takeLastRegisterß.cubeColor} : null
           }
         />
         <Poligon
           style={
-            takeLastRegister !== undefined && coneColor === ''
+            coneColorScreen !== ''
+              ? {backgroundColor: coneColorScreen}
+              : takeLastRegister
               ? {backgroundColor: takeLastRegister.coneColor}
-              : {backgroundColor: coneColor}
+              : null
           }
         />
         <Poligon
           style={
-            takeLastRegister !== undefined && dodecaedroColor === ''
+            dodecaedroColorScreen !== ''
+              ? {backgroundColor: dodecaedroColorScreen}
+              : takeLastRegister
               ? {backgroundColor: takeLastRegister.dodecaedroColor}
-              : {backgroundColor: dodecaedroColor}
+              : null
           }
         />
       </PoligonView>
