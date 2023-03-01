@@ -26,7 +26,7 @@ export const Poligon = styled.View`
   height: 80px;
   width: 80px;
   justify-content: space-between;
-  padding-top: 200px;
+  margin-bottom: 100px ;
 `;
 
 export const PoligonView = styled.View`
@@ -34,6 +34,7 @@ export const PoligonView = styled.View`
   align-items: center;
   padding-bottom: 50px;
   justify-content: center ;
+  margin-bottom: 20px;
 `;
 
 export const LoginButton = styled.TouchableOpacity`

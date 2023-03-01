@@ -10,10 +10,11 @@ import {
   PoligonView,
 } from './styles';
 import app from '../../config/firebase';
+import Toast from 'react-native-toast-message'
 import {addDoc, collection, getDocs, getFirestore} from 'firebase/firestore';
 
 export default function Poligonn({route}) {
-  const [userId, setUserId] = useState([]);
+  const [color, setColor] = useState([]);
   const [cubeColor, setCubeColor] = useState('');
   const [coneColor, setConeColor] = useState('');
   const [dodecaedroColor, setDodecaedroColor] = useState('');
@@ -23,29 +24,38 @@ export default function Poligonn({route}) {
 
   const db = getFirestore(app);
 
-  const userCollectionRef = collection(db, route.params.idUser);
-  const takeLastRegister = userId[userId.length - 1];
+  const dataColection = collection(db, route.params.idUser);
+  const takeLastRegister = color[color.length - 1];
 
   const handleSaveColors = useCallback(async () => {
     cubeColor !== '' && coneColor !== '' && dodecaedroColor !== ''
       ? (setCubeColorScreen(cubeColor),
         setConeColorScreen(coneColor),
         setDodecaedroColorScreen(dodecaedroColor),
-        await addDoc(userCollectionRef, {
+        showToast('success', 'SUCESSO', 'CORES APLICADAS E SALVAS'),
+        await addDoc(dataColection, {
           cubeColor,
           coneColor,
           dodecaedroColor,
         }))
-      : null;
-  }, [coneColor, cubeColor, dodecaedroColor, userCollectionRef]);
+      : showToast('error', 'ERRO', 'PREENCHA TODOS OS CAMPOS');
+  }, [coneColor, cubeColor, dodecaedroColor, dataColection]);
 
   useEffect(() => {
     const getUsers = async () => {
-      const data = await getDocs(userCollectionRef);
-      setUserId(data.docs.map(doc => ({...doc.data(), id: doc.id})));
+      const data = await getDocs(dataColection);
+      setColor(data.docs.map(doc => ({...doc.data(), id: doc.id})));
     };
     getUsers();
   }, []);
+
+  const showToast = (type, title, body) => {
+    Toast.show({
+      type: type,
+      text1: title,
+      text2: body,
+    });
+  };
 
   return (
     <Page>
@@ -105,6 +115,7 @@ export default function Poligonn({route}) {
           <Text>Aplicar</Text>
         </LoginButton>
       </FooteContainer>
+      <Toast />
     </Page>
   );
 };
