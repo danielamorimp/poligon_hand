@@ -18,7 +18,6 @@ export const FooteContainer = styled.View`
   left: 0;
   bottom: 0;
   right: 0;
-  padding-bottom: 50px;
 `;
 
 export const Poligon = styled.View`

@@ -64,26 +64,21 @@ export default function Poligonn({route}) {
           style={
             cubeColorScreen !== ''
               ? {backgroundColor: cubeColorScreen}
-              : takeLastRegister
-              ? {backgroundColor: takeLastRegister.cubeColor} : null
+              :{backgroundColor: takeLastRegister?.cubeColor}
           }
         />
         <Poligon
           style={
             coneColorScreen !== ''
               ? {backgroundColor: coneColorScreen}
-              : takeLastRegister
-              ? {backgroundColor: takeLastRegister.coneColor}
-              : null
+              :  {backgroundColor: takeLastRegister?.coneColor}
           }
         />
         <Poligon
           style={
             dodecaedroColorScreen !== ''
               ? {backgroundColor: dodecaedroColorScreen}
-              : takeLastRegister
-              ? {backgroundColor: takeLastRegister.dodecaedroColor}
-              : null
+              : {backgroundColor: takeLastRegister?.dodecaedroColor}
           }
         />
       </PoligonView>
@@ -91,19 +86,19 @@ export default function Poligonn({route}) {
         <FooteButtonContainer>
           <TextInput
             placeholder="Cor do Cubo"
-            style={{backgroundColor: 'white', width: '33%', height: 20}}
+            style={{backgroundColor: 'white', width: '33%'}}
             onChangeText={text => setCubeColor(text)}
             value={cubeColor.toLowerCase()}
           />
           <TextInput
             placeholder="Cor do Cone"
-            style={{backgroundColor: 'white', width: '33%', height: 20}}
+            style={{backgroundColor: 'white', width: '33%'}}
             onChangeText={text => setConeColor(text)}
             value={coneColor.toLowerCase()}
           />
           <TextInput
             placeholder="Cor do Dodecaedro"
-            style={{backgroundColor: 'white', width: '33%', height: 20}}
+            style={{backgroundColor: 'white', width: '33%'}}
             onChangeText={text => setDodecaedroColor(text)}
             value={dodecaedroColor.toLowerCase()}
           />

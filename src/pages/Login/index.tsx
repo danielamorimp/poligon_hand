@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Text, TextInput } from "@react-native-material/core";
-import app from "../../config/firebase";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import React, {useState} from 'react';
+import {Text, TextInput} from '@react-native-material/core';
+import app from '../../config/firebase';
+import {signInWithEmailAndPassword, getAuth} from 'firebase/auth';
 import {
   Page,
   LoginButton,
